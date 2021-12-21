@@ -11,9 +11,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.a7medkenawy.newsapp.R
 import com.a7medkenawy.newsapp.adapter.ArticleListener
 import com.a7medkenawy.newsapp.adapter.NewsAdapter
+import com.a7medkenawy.newsapp.db.ArticleDao
+import com.a7medkenawy.newsapp.db.ArticleDatabase
 import com.a7medkenawy.newsapp.model.Article
+import com.a7medkenawy.newsapp.repository.NewsRepository
 import com.a7medkenawy.newsapp.viewmodel.NewsViewModel
 import com.a7medkenawy.newsapp.util.Resource
+import com.a7medkenawy.newsapp.viewmodel.ViewModelFactory
 import kotlinx.android.synthetic.main.fragment_breaking_news.view.*
 
 class BreakingNewsFragment : Fragment(), ArticleListener {
@@ -26,7 +30,11 @@ class BreakingNewsFragment : Fragment(), ArticleListener {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_breaking_news, container, false)
 
-        viewModel = ViewModelProvider(this)[NewsViewModel::class.java]
+        val articleDatabase=ArticleDatabase.buildDatabase(requireContext())
+        val newsRepository=NewsRepository(articleDatabase.getArticleDao())
+
+        var viewModelFactory=ViewModelFactory(requireActivity().application,newsRepository)
+        viewModel = ViewModelProvider(this,viewModelFactory)[NewsViewModel::class.java]
 
         adapter = NewsAdapter(this)
 

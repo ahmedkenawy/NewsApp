@@ -7,7 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import com.a7medkenawy.newsapp.R
+import com.a7medkenawy.newsapp.db.ArticleDatabase
+import com.a7medkenawy.newsapp.repository.NewsRepository
 import com.a7medkenawy.newsapp.viewmodel.NewsViewModel
+import com.a7medkenawy.newsapp.viewmodel.ViewModelFactory
 
 
 class SavedNewsFragment : Fragment() {
@@ -18,8 +21,12 @@ class SavedNewsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view=inflater.inflate(R.layout.fragment_saved_news, container, false)
+        val articleDatabase= ArticleDatabase.buildDatabase(requireContext())
+        val newsRepository=NewsRepository(articleDatabase.getArticleDao())
 
-        viewModel=ViewModelProvider(this).get(NewsViewModel::class.java)
+        var viewModelFactory= ViewModelFactory(requireActivity().application,newsRepository)
+        viewModel = ViewModelProvider(this,viewModelFactory)[NewsViewModel::class.java]
+
         return view
     }
 
