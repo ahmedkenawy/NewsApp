@@ -15,6 +15,9 @@ class NewsViewModel(application: Application, val newsRepository: NewsRepository
     val breakingNews: MutableLiveData<Resource<NewsResponse>> = MutableLiveData()
     var breakingPageNumber = 1
 
+    val searchNews: MutableLiveData<Resource<NewsResponse>> = MutableLiveData()
+    var searchPageNumber = 1
+
     init {
         getBreakingNews("eg")
     }
@@ -32,7 +35,29 @@ class NewsViewModel(application: Application, val newsRepository: NewsRepository
         )
     }
 
+
+    fun searchNews(question: String) = viewModelScope.launch {
+        searchNews.postValue(Resource.Loading())
+        searchNews.postValue(
+            handleSearchNews(
+                newsRepository.searchNews(
+                    question,
+                    searchPageNumber
+                )
+            )
+        )
+    }
+
     private fun handleBreakingNewsResponse(response: Response<NewsResponse>): Resource<NewsResponse> {
+        if (response.isSuccessful) {
+            response.body()?.let {
+                return Resource.Success(it)
+            }
+        }
+        return Resource.Error(response.message())
+    }
+
+    private fun handleSearchNews(response: Response<NewsResponse>): Resource<NewsResponse> {
         if (response.isSuccessful) {
             response.body()?.let {
                 return Resource.Success(it)
