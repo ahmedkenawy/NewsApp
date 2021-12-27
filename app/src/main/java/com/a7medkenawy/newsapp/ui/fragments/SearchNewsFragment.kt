@@ -10,6 +10,7 @@ import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.a7medkenawy.newsapp.R
 import com.a7medkenawy.newsapp.adapter.ArticleListener
@@ -93,15 +94,12 @@ class SearchNewsFragment : Fragment(), ArticleListener {
 
         })
 
-
-
-
-
         return view
     }
 
     override fun onArticleClicked(article: Article) {
-        Toast.makeText(requireContext(), "ya kareeem yarab", Toast.LENGTH_LONG).show()
+        val action = SearchNewsFragmentDirections.actionSearchNewsFragmentToArticleFragment(article)
+        Navigation.findNavController(requireView()).navigate(action)
     }
 
 

@@ -1,29 +1,33 @@
 package com.a7medkenawy.newsapp.model
 
 
+import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
+import kotlinx.android.parcel.RawValue
 
 @Entity(tableName = "articles")
+@Parcelize
 data class Article(
     @PrimaryKey(autoGenerate = true)
-    val id:Int?=null,
+    val id:@RawValue Int?=null,
     @SerializedName("author")
-    val author: String?,
+    val author:@RawValue String?,
     @SerializedName("content")
-    val content: String?,
+    val content:@RawValue String?,
     @SerializedName("description")
-    val description: String?,
+    val description:@RawValue String?,
     @SerializedName("publishedAt")
-    val publishedAt: String?,
+    val publishedAt:@RawValue String?,
     @SerializedName("source")
-    val source: Source?,
+    val source:@RawValue Source?,
     @SerializedName("title")
-    val title: String?,
+    val title:@RawValue String?,
     @SerializedName("url")
-    val url: String?,
+    val url:@RawValue String?,
     @SerializedName("urlToImage")
-    val urlToImage: String?
+    val urlToImage:@RawValue String?
 
-)
+):Parcelable

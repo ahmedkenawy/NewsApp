@@ -8,6 +8,8 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.Navigation
+import androidx.navigation.Navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.a7medkenawy.newsapp.R
 import com.a7medkenawy.newsapp.adapter.ArticleListener
@@ -59,7 +61,8 @@ class BreakingNewsFragment : Fragment(), ArticleListener {
     }
 
     override fun onArticleClicked(article: Article) {
-        Toast.makeText(requireContext(),"yalahooooy ya3ame el7ag",Toast.LENGTH_LONG).show()
+        val action = BreakingNewsFragmentDirections.actionBreakingNewsFragmentToArticleFragment(article)
+        findNavController(requireView()).navigate(action)
     }
 
 
