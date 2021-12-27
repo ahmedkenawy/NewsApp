@@ -4,11 +4,12 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="5dp"
+    android:layout_margin="20dp"
     >
 
     <ImageView
         android:id="@+id/urlToImage"
-        android:layout_width="200dp"
+        android:layout_width="150dp"
         android:layout_height="120dp"
         android:scaleType="centerCrop"
         android:src="@drawable/photo"
@@ -20,7 +21,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
-        android:text="Ahmed"
+        android:text="Ahmed Kwnawy"
+        android:lines="1"
         android:textColor="@color/black"
         android:textStyle="bold"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -42,11 +44,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="5dp"
+        android:lines="1"
         android:maxEms="12"
         android:text="@string/content"
         android:textColor="@color/black"
         android:textStyle="bold"
-        android:lines="3"
         app:layout_constraintLeft_toRightOf="@id/urlToImage"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -55,11 +57,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="5dp"
+        android:layout_marginTop="12dp"
+        android:paddingEnd="35dp"
+        android:lines="4"
         android:maxEms="12"
-        android:lines="5"
         android:text="@string/content"
         android:textColor="@color/black"
-        android:layout_marginTop="12dp"
 
         app:layout_constraintLeft_toRightOf="@id/urlToImage"
         app:layout_constraintTop_toBottomOf="@id/tv_content" />

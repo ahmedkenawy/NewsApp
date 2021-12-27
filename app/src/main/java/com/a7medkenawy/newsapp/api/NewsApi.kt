@@ -17,7 +17,6 @@ interface NewsApi {
         page: Int = 1,
         @Query("apiKey")
         apiKey: String = Constants.API_KEY,
-
     ): Response<NewsResponse>
 
 

@@ -10,15 +10,15 @@ import com.a7medkenawy.newsapp.util.Resource
 import kotlinx.coroutines.launch
 import retrofit2.Response
 
-class NewsViewModel( application: Application,val newsRepository: NewsRepository) :
+class NewsViewModel(application: Application, val newsRepository: NewsRepository) :
     AndroidViewModel(application) {
+    val breakingNews: MutableLiveData<Resource<NewsResponse>> = MutableLiveData()
+    var breakingPageNumber = 1
 
     init {
         getBreakingNews("eg")
     }
 
-    val breakingNews: MutableLiveData<Resource<NewsResponse>> = MutableLiveData()
-    var breakingPageNumber = 1
 
     fun getBreakingNews(countryCode: String) = viewModelScope.launch {
         breakingNews.postValue(Resource.Loading())

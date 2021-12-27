@@ -8,6 +8,8 @@ import androidx.navigation.ui.setupWithNavController
 import com.a7medkenawy.newsapp.R
 import com.a7medkenawy.newsapp.db.ArticleDatabase
 import com.a7medkenawy.newsapp.repository.NewsRepository
+import com.a7medkenawy.newsapp.viewmodel.NewsViewModel
+import com.a7medkenawy.newsapp.viewmodel.ViewModelFactory
 import kotlinx.android.synthetic.main.activity_news.*
 
 class NewsActivity : AppCompatActivity() {
@@ -16,6 +18,11 @@ class NewsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_news)
 
-        bottomNavigationView.setupWithNavController(Navigation.findNavController(this,R.id.fragmentContainerView))
+        bottomNavigationView.setupWithNavController(
+            Navigation.findNavController(
+                this,
+                R.id.fragmentContainerView
+            )
+        )
     }
 }

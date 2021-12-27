@@ -29,7 +29,6 @@ class NewsAdapter(var listener: ArticleListener) :
 
     override fun onBindViewHolder(holder: NewsViewHolder, position: Int) {
         val article = oldList[position]
-
         holder.itemView.apply {
             Glide.with(this).load(article.urlToImage).into(urlToImage)
             tv_author.text = article.author
