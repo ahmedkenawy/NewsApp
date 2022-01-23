@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.a7medkenawy.newsapp.model.Article
 import com.a7medkenawy.newsapp.model.NewsResponse
 import com.a7medkenawy.newsapp.repository.NewsRepository
 import com.a7medkenawy.newsapp.util.Resource
@@ -19,7 +20,7 @@ class NewsViewModel(application: Application, val newsRepository: NewsRepository
     var searchPageNumber = 1
 
     init {
-        getBreakingNews("eg")
+        getBreakingNews("us")
     }
 
 
@@ -65,5 +66,18 @@ class NewsViewModel(application: Application, val newsRepository: NewsRepository
         }
         return Resource.Error(response.message())
     }
+
+
+    fun insert(article: Article) = viewModelScope.launch {
+        newsRepository.insert(article)
+    }
+
+    fun delete(article: Article) = viewModelScope.launch {
+        newsRepository.delete(article)
+    }
+
+
+    fun getAllData() = newsRepository.getAllData()
+
 
 }
