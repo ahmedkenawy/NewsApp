@@ -14,6 +14,8 @@
  - [ ] Glide
  - [ ] view Binding
  - [ ] Repository Design Pattern
+
+
  [Watch The Video](https://youtu.be/6q0vWK4fpS0)
 
 
