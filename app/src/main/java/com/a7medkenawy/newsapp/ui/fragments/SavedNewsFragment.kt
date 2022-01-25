@@ -27,6 +27,7 @@ class SavedNewsFragment : Fragment(), ArticleListener {
     lateinit var viewModel: NewsViewModel
     lateinit var newsAdapter: NewsAdapter
     private lateinit var itemTouchHelper: ItemTouchHelper
+    lateinit var arList: List<Article>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,23 +35,23 @@ class SavedNewsFragment : Fragment(), ArticleListener {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_saved_news, container, false)
 
-        handleViewModel()
+        val articleDatabase = ArticleDatabase.buildDatabase(requireContext())
+        val newsRepository = NewsRepository(articleDatabase.getArticleDao())
+
+        var viewModelFactory = ViewModelFactory(requireActivity().application, newsRepository)
+        viewModel = ViewModelProvider(this, viewModelFactory)[NewsViewModel::class.java]
+
+
         newsAdapter = NewsAdapter(this)
-        handleRecyclerView()
-        handleSwipeMethod()
+        viewModel.getAllData().observe(viewLifecycleOwner, { articleList ->
+            arList = articleList
+            newsAdapter.setData(arList)
+        })
 
-        return view
-    }
-
-
-    override fun onArticleClicked(article: Article) {
-        val action = SavedNewsFragmentDirections.actionSavedNewsFragmentToArticleFragment(article)
-        Navigation.findNavController(requireView()).navigate(action)
-
-    }
+        view?.saved_RV?.layoutManager = LinearLayoutManager(requireContext())
+        view?.saved_RV?.adapter = newsAdapter
 
 
-    private fun handleSwipeMethod() {
         val simpleCallback = object :
             ItemTouchHelper.SimpleCallback(
                 0,
@@ -69,19 +70,17 @@ class SavedNewsFragment : Fragment(), ArticleListener {
                 when (direction) {
                     ItemTouchHelper.LEFT -> {
                         try {
-                            viewModel.getAllData().observe(viewLifecycleOwner, { articleList ->
-                                val article = articleList[position]
-                                viewModel.delete(article)
-                                newsAdapter.setData(articleList)
-                            })
+                            viewModel.delete(arList[position])
+                            newsAdapter.setData(arList)
+
                         } catch (ex: Exception) {
                         }
-                        Toast.makeText(requireContext(), "Bad$position", Toast.LENGTH_LONG).show()
+                        Toast.makeText(requireContext(), "Article Deleted", Toast.LENGTH_LONG).show()
                     }
-                    ItemTouchHelper.RIGHT -> {
-                        Toast.makeText(requireContext(), "Good$position", Toast.LENGTH_LONG)
-                            .show()
-                    }
+//                    ItemTouchHelper.RIGHT -> {
+//                        Toast.makeText(requireContext(), "Good$position", Toast.LENGTH_LONG)
+//                            .show()
+//                    }
                 }
             }
 
@@ -89,24 +88,16 @@ class SavedNewsFragment : Fragment(), ArticleListener {
 
         itemTouchHelper = ItemTouchHelper(simpleCallback)
         itemTouchHelper.attachToRecyclerView(view?.saved_RV)
+
+        return view
     }
 
-    private fun handleRecyclerView() {
-        viewModel.getAllData().observe(viewLifecycleOwner, { articleList ->
-            newsAdapter.setData(articleList)
-        })
 
-        view?.saved_RV?.layoutManager = LinearLayoutManager(requireContext())
-        view?.saved_RV?.adapter = newsAdapter
+    override fun onArticleClicked(article: Article) {
+        val action = SavedNewsFragmentDirections.actionSavedNewsFragmentToArticleFragment(article)
+        Navigation.findNavController(requireView()).navigate(action)
 
     }
 
-    private fun handleViewModel() {
-        val articleDatabase = ArticleDatabase.buildDatabase(requireContext())
-        val newsRepository = NewsRepository(articleDatabase.getArticleDao())
-
-        var viewModelFactory = ViewModelFactory(requireActivity().application, newsRepository)
-        viewModel = ViewModelProvider(this, viewModelFactory)[NewsViewModel::class.java]
-    }
 
 }
