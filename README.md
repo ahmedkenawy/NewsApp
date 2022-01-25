@@ -15,4 +15,5 @@
  - [ ] view Binding
  - [ ] Repository Design Pattern
  
- [Video In Youtube](%28https://youtu.be/vt5fpE0bzSY%29)
+
+[![Watch the video](https://img.youtube.com/vi/T-D1KVIuvjA/maxresdefault.jpg)](%28https://youtu.be/vt5fpE0bzSY%29)
