@@ -6,7 +6,7 @@
  3. live Data and Mutable Live Data
  4. Navigation Component
  5. Room Database
- 6. and more
+ 6. Coroutines
  
  
 ***also you can find other features like***
