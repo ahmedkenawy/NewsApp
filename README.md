@@ -16,4 +16,4 @@
  - [ ] Repository Design Pattern
  
 
-[![Watch the video](%28https://youtu.be/vt5fpE0bzSY%29)](%28https://youtu.be/vt5fpE0bzSY%29)
+[![Watch the video]](%28https://youtu.be/vt5fpE0bzSY%29)
